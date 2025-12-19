@@ -18,8 +18,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Category> create(@RequestBody Category category) {
-      sysostem.out.println("Creating category: " + category);
-        Category saved = service.create(category);
+         Category saved = service.create(category);
         return ResponseEntity.created(URI.create("/api/categories/" + saved.getId())).body(saved);
     }
 
