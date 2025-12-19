@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  eureka:
+    build: ./eureka-server
+    container_name: eureka
+    ports:
+      - "8761:8761"
+
+  gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  category:
+    build: ./category-service
+    container_name: category
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://localhost:27017/kasaragodonline
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+      - mongo
+    ports:
+      - "8082:8082"
+
+volumes:
+  mongo-data:

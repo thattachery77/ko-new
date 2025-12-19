@@ -1,0 +1,25 @@
+1) how to run all services together ->
+
+parent folder -> pom.xml
+
+  <modules>
+<!--    <module>config-repo</module>
+-->   
+     <module>eureka-server</module>
+    <module>api-gateway</module>
+     <module>category-service</module>
+   </modules>
+
+
+mvn spring-boot:run
+-------------------------
+eureka server : http://localhost:8761/
+
+
+
+	<!--	 http://host.docker.internal:8761/eureka/ -->
+
+
+helath check up
+----------'http://localhost:8080/actuator/health
+
