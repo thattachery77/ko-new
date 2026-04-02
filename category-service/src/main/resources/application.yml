@@ -3,20 +3,20 @@ server:
 
 spring:
   application:
-    name: category-service
+    name: CATEGORY
   data:
     mongodb:
-      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/kasaragodonline}
+      uri: mongodb://mongo:27017/kasaragodonline/kasaragodonline
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka:8761/eureka/
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus
+        include: health,info

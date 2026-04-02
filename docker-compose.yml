@@ -3,8 +3,14 @@ services:
   eureka:
     build: ./eureka-server
     container_name: eureka
+    image: ko-new-eureka:latest
     ports:
       - "8761:8761"
+    healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:8761/eureka/apps"]
+     interval: 10s
+     timeout: 5s
+     retries: 10
 
   gateway:
     build: ./api-gateway
@@ -26,13 +32,25 @@ services:
     build: ./category-service
     container_name: category
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://localhost:27017/kasaragodonline
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/kasaragodonline
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
     depends_on:
       - eureka
       - mongo
     ports:
-      - "8082:8082"
+      - "8081:8081"
+
+  auth:
+      build: ./auth-service
+      container_name: auth
+      environment:
+        - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/kasaragodonline
+        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      depends_on:
+        - eureka
+        - mongo
+      ports:
+        - "8082:8082"
 
 volumes:
   mongo-data:

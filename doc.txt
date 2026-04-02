@@ -8,6 +8,8 @@ parent folder -> pom.xml
      <module>eureka-server</module>
     <module>api-gateway</module>
      <module>category-service</module>
+          <module>auth-service</module>
+     
    </modules>
 
 

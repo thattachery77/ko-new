@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: AUTH
+  data:
+    mongodb:
+      uri: mongodb://mongo:27017/kasaragodonline/kasaragodonline
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

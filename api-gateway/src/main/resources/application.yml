@@ -4,11 +4,16 @@ server:
 spring:
   application:
     name: API-GATEWAY
+
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: category-service
-          uri: lb://CATEGORY-SERVICE
+          uri: lb://CATEGORY
           predicates:
             - Path=/api/categories/**
           filters:
@@ -16,15 +21,19 @@ spring:
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka:8761/eureka/
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
-    health-check-url-path: /actuator/health
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
